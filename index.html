@@ -8,11 +8,13 @@
 <script type="text/javascript" src="jquery.classy.js"></script>
 <script type="text/javascript">
 $(function(){
+	
 	$('.animation').click(function(){
-		$(this).classy('playing',{now:{remove:'reset'}, end: {remove:'playing',add:'reset'} },function(){console.log('animation callback')});
+		$(this).classy({add:'playing', remove:'reset'},{remove:'playing', add:'reset',call:function(){console.log('animation callback1')}},function(){console.log('animation callback2')});
+		//$(this).classy('playing',{now:{remove:'reset'}, end: {remove:'playing',add:'reset'} },function(){console.log('animation callback')});
 	});
 	$('.transition').click(function(){
-		$(this).classy('playing',{now:{remove:'reset'},end:{call:function(){console.log('in callback 1')},remove:'playing',add:'reset'},type:'transition'},function(){console.log('in callback')});
+		$(this).classy({add:'playing', remove:'reset'},{remove:'playing', add:'reset',call:function(){console.log('animation callback1')}},function(){console.log('animation callback2')});
 	});
 });
 </script>
@@ -49,8 +51,11 @@ background:#99CC66;
 }
 
 
-.animation.playing {-webkit-animation: cssAnimation 1s ease-in-out;-moz-animation: cssAnimation 1s  16 ease;-o-animation: cssAnimation 1s  16 ease;} 
-.animation.reset {-webkit-animation: cssAnimationReset 1s ease-in-out;-moz-animation: cssAnimationReset 1s  16 ease;-o-animation: cssAnimationReset 1s  16 ease;} 
+.animation.playing {animation: cssAnimation 1s ease; -webkit-animation: cssAnimation 1s ease-in-out;-moz-animation: cssAnimation 1s ease;-o-animation: cssAnimation 1s ease;-ms-animation: cssAnimation 1s ease;} 
+.animation.reset {-webkit-animation: cssAnimationReset 1s ease-in-out;-moz-animation: cssAnimationReset 1s ease;-o-animation: cssAnimationReset 1s ease;animation: cssAnimationReset 1s ease;-ms-animation: cssAnimationReset 1s ease;} 
+
+@keyframes cssAnimation {from { transform: translate(0px); }  to { transform:  translate(182px); } } 
+
 @-webkit-keyframes cssAnimation {from { -webkit-transform: translate(0px); }  to { -webkit-transform:  translate(182px); } } 
 
 @-moz-keyframes cssAnimation {from { -moz-transform:   translate(0px); }  to { -moz-transform:  translate(182px); } } 
@@ -58,6 +63,8 @@ background:#99CC66;
 @-o-keyframes cssAnimation {from { -o-transform:   translate(0px); }  to { -o-transform: translate(182px); } }
 
 @-ms-keyframes cssAnimation {from { -ms-transform:   translate(0px); }  to { -ms-transform:  translate(182px); } }
+
+@keyframes cssAnimationReset {to { transform: translate(0px); }  from { transform:  translate(182px); } } 
 
 @-webkit-keyframes cssAnimationReset {to { -webkit-transform: translate(0px); }  from { -webkit-transform:  translate(182px); } } 
 
