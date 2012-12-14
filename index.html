@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>jQuery Classy Demo</title>
+<body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" ></script>
+<script type="text/javascript" src="jquery.classy.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.animation').click(function(){
+		$(this).classy('playing',{now:{remove:'reset'}, end: {remove:'playing',add:'reset'} },function(){console.log('animation callback')});
+	});
+	$('.transition').click(function(){
+		$(this).classy('playing',{now:{remove:'reset'},end:{call:function(){console.log('in callback 1')},remove:'playing',add:'reset'},type:'transition'},function(){console.log('in callback')});
+	});
+});
+</script>
+<style type="text/css">
+.animation, .transition { background:#CC9; padding:15px; margin:20px;
+-webkit-perspective: 1000;
+-webkit-backface-visibility: hidden;
+}
+
+.transition {
+	transition:All 1s ease;-webkit-transition:All 1s ease;-moz-transition:All 1s ease;-o-transition:All 1s ease;-ms-transition:All 1s ease;
+}
+
+.reset {
+	-webkit-transform:  translate(0px); 
+-moz-transform:  translate(0px);
+-o-transform: translate(0px); 
+-ms-transform:  translate(0px);
+background:#99CC66;
+}
+.playing {
+	background-color:#CC6633;
+}
+
+.animation:before, .transition:before {
+   content: "Default state ";
+}
+
+.reset:before {
+   content: "Reset! ";
+}
+.playing:before {
+   content: "Playing... ";
+}
+
+
+.animation.playing {-webkit-animation: cssAnimation 1s ease-in-out;-moz-animation: cssAnimation 1s  16 ease;-o-animation: cssAnimation 1s  16 ease;} 
+.animation.reset {-webkit-animation: cssAnimationReset 1s ease-in-out;-moz-animation: cssAnimationReset 1s  16 ease;-o-animation: cssAnimationReset 1s  16 ease;} 
+@-webkit-keyframes cssAnimation {from { -webkit-transform: translate(0px); }  to { -webkit-transform:  translate(182px); } } 
+
+@-moz-keyframes cssAnimation {from { -moz-transform:   translate(0px); }  to { -moz-transform:  translate(182px); } } 
+
+@-o-keyframes cssAnimation {from { -o-transform:   translate(0px); }  to { -o-transform: translate(182px); } }
+
+@-ms-keyframes cssAnimation {from { -ms-transform:   translate(0px); }  to { -ms-transform:  translate(182px); } }
+
+@-webkit-keyframes cssAnimationReset {to { -webkit-transform: translate(0px); }  from { -webkit-transform:  translate(182px); } } 
+
+@-moz-keyframes cssAnimationReset {to { -moz-transform:   translate(0px); }  from { -moz-transform:  translate(182px); } } 
+
+@-o-keyframes cssAnimationReset {to { -o-transform:   translate(0px); }  from { -o-transform: translate(182px); } }
+
+@-ms-keyframes cssAnimationReset {to { -ms-transform:   translate(0px); }  from { -ms-transform:  translate(182px); } }
+
+
+
+
+.transition.playing {transform:  translate(182px);-webkit-transform:  translate(182px);-moz-transform:   translate(182px);-o-transform:  translate(182px);-ms-transform:   translate(182px);}
+
+
+
+
+</style>
+</head>
+
+
+
+<div class="animation">[Test Animation]</div>
+
+<div class="transition">[Test Transition]</div>
+
+</body>
+</html>
