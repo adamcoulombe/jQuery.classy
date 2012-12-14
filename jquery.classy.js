@@ -1,6 +1,34 @@
 /*! jQuery.classy() - v0.0.1 - 2012-12-14
 * Copyright (c) 2012 Adam Coulombe; Licensed MIT, GPL */
 (function($){
+	
+	var $bind = $.fn.bind;
+    $.fn.bind = function()
+    {
+		if(typeof arguments[0] === 'string' ){
+			browserVendorPrefix = $.getBrowserVendorPrefix();
+			arguments[0] = arguments[0].replace('transitionend', 'transitionend '+ browserVendorPrefix +'TransitionEnd');
+			arguments[0] = arguments[0].replace('animationstart', 'animationstart '+ browserVendorPrefix +'AnimationStart');
+			arguments[0] = arguments[0].replace('animationiteration', 'animationiteration '+ browserVendorPrefix +'AnimationIteration');
+			arguments[0] = arguments[0].replace('animationend', 'animationend '+ browserVendorPrefix +'AnimationEnd');
+		}
+  	    var ret = $bind.apply(this, arguments);
+        return ret;
+    };
+	var $unbind = $.fn.unbind;
+    $.fn.unbind = function()
+    {
+		if(typeof arguments[0] === 'string' ){
+			browserVendorPrefix = $.getBrowserVendorPrefix();
+			arguments[0] = arguments[0].replace('transitionend', 'transitionend '+ browserVendorPrefix +'TransitionEnd');
+			arguments[0] = arguments[0].replace('animationstart', 'animationstart '+ browserVendorPrefix +'AnimationStart');
+			arguments[0] = arguments[0].replace('animationiteration', 'animationiteration '+ browserVendorPrefix +'AnimationIteration');
+			arguments[0] = arguments[0].replace('animationend', 'animationend '+ browserVendorPrefix +'AnimationEnd');
+		}
+  	    var ret = $unbind.apply(this, arguments);
+        return ret;
+    };
+	
 	$.extend({
 	
 		getBrowserVendorPrefix : function(lowercaseFormat){
@@ -34,32 +62,7 @@
 			return '';
 		}	
 	});
-	var $bind = $.fn.bind;
-    $.fn.bind = function()
-    {
-		if(typeof arguments[0] === 'string' ){
-			browserVendorPrefix = $.getBrowserVendorPrefix();
-			arguments[0] = arguments[0].replace('transitionend', 'transitionend '+ browserVendorPrefix +'TransitionEnd');
-			arguments[0] = arguments[0].replace('animationstart', 'animationstart '+ browserVendorPrefix +'AnimationStart');
-			arguments[0] = arguments[0].replace('animationiteration', 'animationiteration '+ browserVendorPrefix +'AnimationIteration');
-			arguments[0] = arguments[0].replace('animationend', 'animationend '+ browserVendorPrefix +'AnimationEnd');
-		}
-  	    var ret = $bind.apply(this, arguments);
-        return ret;
-    };
-	var $unbind = $.fn.unbind;
-    $.fn.unbind = function()
-    {
-		if(typeof arguments[0] === 'string' ){
-			browserVendorPrefix = $.getBrowserVendorPrefix();
-			arguments[0] = arguments[0].replace('transitionend', 'transitionend '+ browserVendorPrefix +'TransitionEnd');
-			arguments[0] = arguments[0].replace('animationstart', 'animationstart '+ browserVendorPrefix +'AnimationStart');
-			arguments[0] = arguments[0].replace('animationiteration', 'animationiteration '+ browserVendorPrefix +'AnimationIteration');
-			arguments[0] = arguments[0].replace('animationend', 'animationend '+ browserVendorPrefix +'AnimationEnd');
-		}
-  	    var ret = $unbind.apply(this, arguments);
-        return ret;
-    };
+	
 	$.fn.extend({
 	 	classy : function() {
 			var options = {};
