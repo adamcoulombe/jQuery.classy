@@ -5,20 +5,20 @@
 	var $bind = $.fn.bind;
     $.fn.bind = function()
     {
-		arguments[0] = $.addEventPrefixes(arguments[0]);
+		arguments[0] = $.extendEventPrefixes(arguments[0]);
   	    var ret = $bind.apply(this, arguments);
         return ret;
     };
 	var $unbind = $.fn.unbind;
     $.fn.unbind = function()
     {
-		arguments[0] = $.addEventPrefixes(arguments[0]);
+		arguments[0] = $.extendEventPrefixes(arguments[0]);
   	    var ret = $unbind.apply(this, arguments);
         return ret;
     };
 	
 	$.extend({
-		addEventPrefixes : function(e){
+		extendEventPrefixes : function(e){
 			if(typeof e === 'string' ){
 				browserVendorPrefix = $.getBrowserVendorPrefix();
 				e = e.replace('transitionend', 'transitionend '+ browserVendorPrefix +'TransitionEnd');
