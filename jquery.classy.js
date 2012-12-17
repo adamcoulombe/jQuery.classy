@@ -5,32 +5,29 @@
 	var $bind = $.fn.bind;
     $.fn.bind = function()
     {
-		if(typeof arguments[0] === 'string' ){
-			browserVendorPrefix = $.getBrowserVendorPrefix();
-			arguments[0] = arguments[0].replace('transitionend', 'transitionend '+ browserVendorPrefix +'TransitionEnd');
-			arguments[0] = arguments[0].replace('animationstart', 'animationstart '+ browserVendorPrefix +'AnimationStart');
-			arguments[0] = arguments[0].replace('animationiteration', 'animationiteration '+ browserVendorPrefix +'AnimationIteration');
-			arguments[0] = arguments[0].replace('animationend', 'animationend '+ browserVendorPrefix +'AnimationEnd');
-		}
+		arguments[0] = $.addEventPrefixes(arguments[0]);
   	    var ret = $bind.apply(this, arguments);
         return ret;
     };
 	var $unbind = $.fn.unbind;
     $.fn.unbind = function()
     {
-		if(typeof arguments[0] === 'string' ){
-			browserVendorPrefix = $.getBrowserVendorPrefix();
-			arguments[0] = arguments[0].replace('transitionend', 'transitionend '+ browserVendorPrefix +'TransitionEnd');
-			arguments[0] = arguments[0].replace('animationstart', 'animationstart '+ browserVendorPrefix +'AnimationStart');
-			arguments[0] = arguments[0].replace('animationiteration', 'animationiteration '+ browserVendorPrefix +'AnimationIteration');
-			arguments[0] = arguments[0].replace('animationend', 'animationend '+ browserVendorPrefix +'AnimationEnd');
-		}
+		arguments[0] = $.addEventPrefixes(arguments[0]);
   	    var ret = $unbind.apply(this, arguments);
         return ret;
     };
 	
 	$.extend({
-	
+		addEventPrefixes : function(e){
+			if(typeof e === 'string' ){
+				browserVendorPrefix = $.getBrowserVendorPrefix();
+				e = e.replace('transitionend', 'transitionend '+ browserVendorPrefix +'TransitionEnd');
+				e = e.replace('animationstart', 'animationstart '+ browserVendorPrefix +'AnimationStart');
+				e = e.replace('animationiteration', 'animationiteration '+ browserVendorPrefix +'AnimationIteration');
+				e = e.replace('animationend', 'animationend '+ browserVendorPrefix +'AnimationEnd');
+			}
+			return e;
+		},
 		getBrowserVendorPrefix : function(lowercaseFormat){
 			
 			var regex = /^(Moz|Webkit|Khtml|O|ms|Icab)(?=[A-Z])/;
@@ -60,7 +57,23 @@
 			}
 		
 			return '';
-		}	
+		},
+		classy : {
+			apply :function($el,opt){
+				if(typeof opt.add == 'string'){ $el.addClass(opt.add); }
+				if(typeof opt.remove == 'string'){ $el.removeClass(opt.remove);}
+				if(typeof opt.call == 'function'){ opt.call(); }	
+			},
+			map : function($el,e,opt){
+				if(typeof opt.add == 'string' || typeof opt.remove == 'string' || typeof opt.call == 'function'){
+					var callback = function(){
+						if(!opt.eventPersist){ $el.unbind(e); }
+						$.classy.apply($el,opt);
+					}
+					$el.bind(e,callback);
+				}
+			}
+		}
 	});
 	
 	$.fn.extend({
@@ -153,48 +166,21 @@
 				}
 				console.log(options.type);
 				var endEvent = options.type + 'end';
-				
-				var onInit = function(){
-					if(typeof options.add == 'string'){ $this.addClass(options.add);  }
-					if(typeof options.remove == 'string'){ $this.removeClass(options.remove);  }
-					if(typeof options.call == 'function'){ options.call(); }
-				}
-
-				var onEnd = function(){
-					if(!options.end.eventPersist){ $this.unbind(endEvent); }
-					if(typeof options.end.add == 'string'){ $this.addClass(options.end.add); }
-					if(typeof options.end.remove == 'string'){ $this.removeClass(options.end.remove);}
-					if(typeof options.end.call == 'function'){ options.end.call(); }
-				}
 
 				if(typeof options.add == 'string' || typeof options.remove == 'string' || typeof options.call == 'function'){
+					var onInit = function(){
+						$.classy.apply($this,options);
+					}
 					onInit();
 				}
-				if(typeof options.end.add == 'string' || typeof options.end.remove == 'string' || typeof options.end.call == 'function'){
-					$this.bind(endEvent,onEnd);
-				}
+
+				$.classy.map($this,endEvent,options.end);
 
 				if(options.type=='animation'){
-					
-					var onStart = function(){
-						if(!options.start.eventPersist){ $this.unbind('animationstart'); }
-						if(typeof options.start.add == 'string'){ $this.addClass(options.start.add);  }
-						if(typeof options.start.remove == 'string'){ $this.removeClass(options.start.remove);  }
-						if(typeof options.start.call == 'function'){ options.start.call(); }
-					}
-					if(typeof options.start.add == 'string' || typeof options.start.remove == 'string' || typeof options.start.call == 'function'){
-						$this.bind('animationstart',onStart);
-					}
-					
-					var onIteration = function(){
-						if(!options.iteration.eventPersist){ $this.unbind('animationiteration'); }
-						if(typeof options.iteration.add == 'string'){ $this.addClass(options.iteration.add);  }
-						if(typeof options.iteration.remove == 'string'){ $this.removeClass(options.iteration.remove);  }
-						if(typeof options.iteration.call == 'function'){ options.iteration.call();  }
-					}
-					if(typeof options.start.add == 'string' || typeof options.start.remove == 'string' || typeof options.start.call == 'function'){
-						$this.bind('animationiteration',onIteration);
-					}
+
+					$.classy.map($this,'animationstart',options.start);
+					$.classy.map($this,'animationiteration',options.iteration);
+
 				}
 			});
 		}
