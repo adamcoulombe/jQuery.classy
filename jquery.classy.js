@@ -123,9 +123,9 @@
 							
 							options.end.call = newCallback;
 						}
-					}/*else{
-						options.end = arguments.call[1];
-					}*/
+					}else{
+						options.end = arguments[1];
+					}
 				}
 			}
 			
