@@ -15,7 +15,7 @@ Classy lets you add and remove classes upon various animation or transition even
 
 ## Transition Examples ##
 
-### CSS: ###
+### The CSS: ###
 
 ```css
 #anElementWithATransition {
@@ -29,9 +29,31 @@ Classy lets you add and remove classes upon various animation or transition even
 }​
 ```
 
-### Classy/Javascript: ###
-####Simple Add/Remove####
+### The Javascript: ###
+####Simple Add/Remove:####
 [Show Demo](http://jsfiddle.net/adamco/3jKCe/2/)
 ```javascript
 $("#anElementWithATransition").classy({ add:'moved' }, { remove:'moved' });
+```
+**or just:**
+```javascript
+$("#anElementWithATransition").classy('moved', { remove:'moved' });
+```
+
+#### With Callback:####
+[Show Demo](http://jsfiddle.net/adamco/BNdZG/1/)
+```javascript
+$("#anElementWithATransition").classy({ add:'moved' }, { remove:'moved', call:function(){ alert('at end of transition') } });
+```
+
+#### Swap Classes:####
+[Show Demo](http://jsfiddle.net/adamco/XG7JQ/2/)
+```javascript
+$("#anElementWithATransition").classy({ add:'moved', remove:'anotherClass' }, { remove:'moved', add:'anotherClass' });
+```
+
+#### With Callback:####
+[Show Demo](http://jsfiddle.net/adamco/BNdZG/1/)
+```javascript
+$("#anElementWithATransition").classy({ add:'moved' }, { remove:'moved', call:function(){ alert('at end of transition') } });
 ```
