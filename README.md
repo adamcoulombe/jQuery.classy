@@ -13,38 +13,25 @@ Yes, writing out and managing definitions amongst a mess of vendor prefixes can 
 
 Classy lets you add and remove classes upon various animation or transition events, allowing you to take control over how your animations & transitions are sequenced and experienced.
 
-## Example Transition ##
+## Transition Examples ##
 
-## CSS: ##
+### CSS: ###
 
 ```css
 #anElementWithATransition {
-	transition:all 1s ease;-webkit-transition:all 1s ease;-moz-transition:all 1s ease;-o-transition:all 1s ease;-ms-transition:all 1s ease;
-	background-color:green;
-	left:0px;
+    transition:all 1s ease;-webkit-transition:all 1s ease;-moz-transition:all 1s ease;-o-transition:all 1s ease;-ms-transition:all 1s ease;
+    background-color:green;
+    margin-left:0px;
 }
 #anElementWithATransition.moved {
-	background-color:red;
-	left:300px;
-}
-#anElementWithATransition.halfWay {
-	background-color:purple;
-	left:150px;
-}
+    background-color:red;
+    margin-left:300px;
+}​
 ```
 
-## Classy: ##
-
+### Classy/Javascript: ###
+####Simple Add/Remove####
+[Show Demo](http://jsfiddle.net/adamco/3jKCe/2/)
 ```javascript
-$("#anElementWithATransition").classy(
-	{
-		add:'playing',
-		remove:'reset'
-	},
-	{
-		remove:'playing',
-		add:'reset',
-		call:function(){ alert('in transition callback') }
-	}
-);
+$("#anElementWithATransition").classy({ add:'moved' }, { remove:'moved' });
 ```
