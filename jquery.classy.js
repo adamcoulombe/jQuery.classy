@@ -68,12 +68,12 @@
 				if(typeof opt.add == 'string' || typeof opt.remove == 'string' || typeof opt.call == 'function'){
 					var callback = function(){
 						$elData = $el.data();
-						if(!opt.eventPersist || $elData['classy-'+e+'-persist']==opt ){
+						if(!opt.eventPersist || $elData['classy-'+e+'-persist']==e ){
 							$el.unbind(e);
-							if(!opt.eventPersist && $elData['classy-'+e+'-persist']==opt){
+							if(!opt.eventPersist && $elData['classy-'+e+'-persist']==e){
 							}
 						}else{
-							$elData['classy-'+e+'-persist'] = opt;				
+							$elData['classy-'+e+'-persist'] = e;				
 						}
 						$.classy.apply($el,opt);
 					}
