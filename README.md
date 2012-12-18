@@ -13,6 +13,20 @@ Yes, writing out and managing definitions amongst a mess of vendor prefixes can 
 
 Classy lets you add and remove CSS classes upon various animation or transition events, allowing you to take control over how your animations & transitions are sequenced and experienced.
 
+# Usage #
+Whether you're using a CSS animation, or transition, classy strives to make it easy to control classes and add callbacks.
+
+$("#yourElement").classy(*[options]*,*[end options]*,*[end callback]*);
+
+or
+
+$("#yourElement").classy(*[options]*,*[end callback]*);
+
+* *[options]* Can be an object containing all your options, or just a string of the class you wish to add to the element upon initiation.
+* *[end options]* Shortcut parameter to configure classes to add/remove and a callback for the end state
+* *[end callback]* Shortcut parameter for the callback of the end state.
+
+
 # Examples/Demos #
 *Yes, I know defining animations& transitions with all vendor prefixes in plain CSS makes your eyes bleed and head explode. Again, never try this at home without [a good SASS mixin](https://github.com/ericam/compass-animation) or the like*
 
@@ -58,6 +72,7 @@ $("#anElementWithATransition").classy({ add:'moved', remove:'anotherClass' }, { 
 ## Animation Examples ##
 
 ### The CSS: ###
+Basic example... This is about as simple as it gets with CSS Animations...
 
 ```css
 #anElementWithAnAnimation {
