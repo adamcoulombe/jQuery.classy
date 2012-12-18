@@ -16,11 +16,11 @@ Classy lets you add and remove CSS classes upon various animation or transition 
 # Usage #
 Whether you're using a CSS animation, or transition, classy strives to make it easy to control classes and add callbacks.
 
-$("#yourElement").classy(*[options]*,*[end options]*,*[end callback]*);
+** $("#yourElement").classy( *[options]* , *[end options]* , *[end callback]* ); **
 
 or
 
-$("#yourElement").classy(*[options]*,*[end callback]*);
+** $("#yourElement").classy( *[options]* , *[end callback]* ); **
 
 * *[options]* Can be an object containing all your options, or just a string of the class you wish to add to the element upon initiation.
 * *[end options]* Shortcut parameter to configure classes to add/remove and a callback for the end state
