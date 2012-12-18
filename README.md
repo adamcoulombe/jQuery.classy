@@ -35,7 +35,7 @@ Classy lets you add and remove classes upon various animation or transition even
 ```javascript
 $("#anElementWithATransition").classy({ add:'moved' }, { remove:'moved' });
 ```
-**or just:**
+*or just:*
 ```javascript
 $("#anElementWithATransition").classy('moved', { remove:'moved' });
 ```

@@ -164,7 +164,6 @@
 						options.type = 'animation'
 					}
 				}
-				console.log(options.type);
 				var endEvent = options.type + 'end';
 
 				if(typeof options.add == 'string' || typeof options.remove == 'string' || typeof options.call == 'function'){
