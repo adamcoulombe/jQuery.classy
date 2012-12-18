@@ -10,7 +10,7 @@
 $(function(){
 	
 	$('.animation').click(function(){
-		$(this).classy({add:'playing', remove:'reset'},{remove:'playing', add:'reset',call:function(){console.log('animation callback1')}},function(){console.log('animation callback2')});
+		$(this).classy({add:'playing', remove:'reset'},{remove:'playing', add:'reset', eventPersist:'every-time',call:function(){console.log('animation callback1')}});
 		//$(this).classy('playing',{now:{remove:'reset'}, end: {remove:'playing',add:'reset'} },function(){console.log('animation callback')});
 	});
 	$('.transition').click(function(){

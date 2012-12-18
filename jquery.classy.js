@@ -59,25 +59,32 @@
 			return '';
 		},
 		classy : {
-			apply :function($el,opt){
-				if(typeof opt.add == 'string'){ $el.addClass(opt.add); }
-				if(typeof opt.remove == 'string'){ $el.removeClass(opt.remove);}
-				if(typeof opt.call == 'function'){ opt.call(); }	
+			apply :function($el,opt,jQueryEvent){
+
+					if(typeof opt.add == 'string'){ $el.addClass(opt.add); }
+					if(typeof opt.remove == 'string'){ $el.removeClass(opt.remove);}
+					if(typeof opt.call == 'function'){ opt.call(jQueryEvent); }
+
 			},
 			map : function($el,e,opt){
 				if(typeof opt.add == 'string' || typeof opt.remove == 'string' || typeof opt.call == 'function'){
-					var callback = function(){
-						$elData = $el.data();
-						if(!opt.eventPersist || $elData['classy-'+e+'-persist']==e ){
+					$elData = $el.data();
+					var callback = function(jQueryEvent){
+						console.log(jQueryEvent);
+						if(!opt.eventPersist){
 							$el.unbind(e);
-							if(!opt.eventPersist && $elData['classy-'+e+'-persist']==e){
-							}
 						}else{
-							$elData['classy-'+e+'-persist'] = e;				
+							if(!$el.data('classy-'+e+'-persist')){
+								$el.data('classy-'+e+'-persist',e);
+							}
 						}
-						$.classy.apply($el,opt);
+						
+						$.classy.apply($el,opt,e,jQueryEvent);
 					}
-					$el.bind(e,callback);
+					if(!opt.eventPersist || !$el.data('classy-'+e+'-persist') ){
+						$el.bind(e,callback);
+					}
+
 				}
 			}
 		}
@@ -123,9 +130,9 @@
 						if(typeof options.end.call === 'function' &&  typeof arguments[1].call === 'function' ){
 							var oldCallback = options.end.call;
 							var addedCallback = arguments[1].call;
-							var newCallback = function(){
-								addedCallback();
-								oldCallback();
+							var newCallback = function(jQueryEvent){
+								addedCallback(jQueryEvent);
+								oldCallback(jQueryEvent);
 							}
 							
 							options.end.call = newCallback;

@@ -51,9 +51,3 @@ $("#anElementWithATransition").classy({ add:'moved' }, { remove:'moved', call:fu
 ```javascript
 $("#anElementWithATransition").classy({ add:'moved', remove:'anotherClass' }, { remove:'moved', add:'anotherClass' });
 ```
-
-#### With Callback:####
-[Show Demo](http://jsfiddle.net/adamco/BNdZG/1/)
-```javascript
-$("#anElementWithATransition").classy({ add:'moved' }, { remove:'moved', call:function(){ alert('at end of transition') } });
-```
