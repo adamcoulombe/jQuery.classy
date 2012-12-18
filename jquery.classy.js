@@ -67,7 +67,14 @@
 			map : function($el,e,opt){
 				if(typeof opt.add == 'string' || typeof opt.remove == 'string' || typeof opt.call == 'function'){
 					var callback = function(){
-						if(!opt.eventPersist){ $el.unbind(e); }
+						$elData = $el.data();
+						if(!opt.eventPersist || $elData['classy-'+e+'-persist']==opt ){
+							$el.unbind(e);
+							if(!opt.eventPersist && $elData['classy-'+e+'-persist']==opt){
+							}
+						}else{
+							$elData['classy-'+e+'-persist'] = opt;				
+						}
 						$.classy.apply($el,opt);
 					}
 					$el.bind(e,callback);
