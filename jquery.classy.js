@@ -99,7 +99,7 @@
 					options.end.call = arguments[1];
 				}
 			}else {
-				if(arguments[2]){
+				if(arguments[2] && typeof arguments[1] === 'function'){
 					if(callback){
 						options.end.call = function(){
 							callback();
@@ -123,9 +123,9 @@
 							
 							options.end.call = newCallback;
 						}
-					}else{
+					}/*else{
 						options.end = arguments.call[1];
-					}
+					}*/
 				}
 			}
 			
