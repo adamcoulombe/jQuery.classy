@@ -108,3 +108,9 @@ Same idea as with transitions...
 ```javascript
 $("#anElementWithAnAnimation").classy({ add:'moved',remove:'moveBack' }, { remove:'moved', add:'moveBack'});
 ```
+
+####With Callbacks:####
+[Show Demo](http://jsfiddle.net/adamco/d6jkk/2/)
+```javascript
+$("#anElementWithAnAnimation").classy({ add:'moved',remove:'moveBack', call:function(){console.log('classy initialized');} }, { remove:'moved', add:'moveBack', call:function(){console.log('animation ended initialized');}});
+```
