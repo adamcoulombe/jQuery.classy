@@ -61,13 +61,41 @@
 		classy : {
 			apply :function($el,opt,jQueryEvent){
 
-					if(typeof opt.add == 'string'){ $el.addClass(opt.add); }
-					if(typeof opt.remove == 'string'){ $el.removeClass(opt.remove);}
+					if(typeof opt.add == 'string'){
+						$el.addClass(opt.add);
+					}else if (typeof opt.add == 'object') {
+						for (var i in opt.add){						
+							if(i==0 && typeof opt.add[0] == 'string'){
+								$el.addClass(opt.add[0]);
+							}else if(typeof opt.add[i] == 'object'){
+								if(typeof opt.add[i][0]=='string'){
+									$(opt.add[i][0]).addClass(opt.add[i][1]);
+								}else{
+									opt.add[i][0].addClass(opt.add[i][1]);
+								}
+							}
+						}
+					}
+					if(typeof opt.remove == 'string'){
+						$el.removeClass(opt.remove);
+					} else if (typeof opt.remove == 'object') {
+						for (var i in opt.remove){						
+							if(i==0 && typeof opt.remove[0] == 'string'){
+								$el.removeClass(opt.remove[0]);
+							}else if(typeof opt.remove[i] == 'object'){
+								if(typeof opt.remove[i][0]=='string'){
+									$(opt.remove[i][0]).removeClass(opt.remove[i][1]);
+								}else{
+									opt.remove[i][0].removeClass(opt.remove[i][1]);
+								}
+							}
+						}
+					}
 					if(typeof opt.call == 'function'){ opt.call(jQueryEvent); }
 
 			},
 			map : function($el,e,opt){
-				if(typeof opt.add == 'string' || typeof opt.remove == 'string' || typeof opt.call == 'function'){
+				if(typeof opt.add == 'string' || typeof opt.add == 'object' || typeof opt.remove == 'string' || typeof opt.remove == 'object' || typeof opt.call == 'function'){
 					$elData = $el.data();
 					var callback = function(jQueryEvent){
 						console.log(jQueryEvent);
@@ -179,14 +207,7 @@
 					}
 				}
 				var endEvent = options.type + 'end';
-
-				if(typeof options.add == 'string' || typeof options.remove == 'string' || typeof options.call == 'function'){
-					var onInit = function(){
-						$.classy.apply($this,options);
-					}
-					onInit();
-				}
-
+				
 				$.classy.map($this,endEvent,options.end);
 
 				if(options.type=='animation'){
@@ -195,6 +216,10 @@
 					$.classy.map($this,'animationiteration',options.iteration);
 
 				}
+
+				//init
+				$.classy.apply($this,options); 
+
 			});
 		}
 	});
