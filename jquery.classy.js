@@ -1,4 +1,4 @@
-/*! jQuery.classy() - v0.0.1 - 2012-12-14
+/*! jQuery.classy() - v0.0.2a - 2012-12-27
 * Copyright (c) 2012 Adam Coulombe; Licensed MIT, GPL */
 (function($){
 	
@@ -91,7 +91,9 @@
 							}
 						}
 					}
-					if(typeof opt.call == 'function'){ opt.call(jQueryEvent); }
+					if(typeof opt.call == 'function'){
+						$.proxy(opt.call,$el)(jQueryEvent); // win!!
+					}
 
 			},
 			map : function($el,e,opt){
