@@ -20,7 +20,7 @@
 	$.extend({
 		extendEventPrefixes : function(e){
 			if(typeof e === 'string' ){
-				browserVendorPrefix = $.getBrowserVendorPrefix();
+				var browserVendorPrefix = $.getBrowserVendorPrefix();
 				e = e.replace('transitionend', 'transitionend '+ browserVendorPrefix +'TransitionEnd');
 				e = e.replace('animationstart', 'animationstart '+ browserVendorPrefix +'AnimationStart');
 				e = e.replace('animationiteration', 'animationiteration '+ browserVendorPrefix +'AnimationIteration');
